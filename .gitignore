@@ -24,18 +24,42 @@
 .DS_Store
 *.pem
 
-# debug
+# debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Environment Variables (secrets should NOT be pushed)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.example
 
-# vercel
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+prisma/.env
+
+# Prisma migrations (optional: push if you want to track schema changes)
+/prisma/migrations/
+
+# Docker
+pg_data/
+docker-volume/
+
+# Vercel & Deployment
 .vercel
 
-# typescript
+# TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Storybook
+/storybook-static/
+*storybook.log
+
+# JetBrains (WebStorm, IntelliJ)
+/.idea/

@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Next.js, Docker, Prisma, and Auth.js Starter Kit**
 
-## Getting Started
+This repository provides a complete **Next.js Starter Kit** with **Docker, Prisma, Auth.js, ESLint, Prettier, and Storybook** preconfigured. Follow the steps below to set up and run the project.
 
-First, run the development server:
+---
 
+## **📌 1. Setup Instructions**
+
+### **1️⃣ Clone the Repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo-url>
+cd <project-folder>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **2️⃣ Install Dependencies**
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### **3️⃣ Configure Environment Variables**
+1. Copy the example `.env` file:
+```bash
+cp .env.example .env
+```
+2. Generate an **Auth Secret**:
+```bash
+pnpx auth secret >> .env && echo 'AUTH_SECRET='$(tail -n 1 .env) >> .env
+```
+3. Fill in the `.env` file with required credentials (e.g., database connection, OAuth keys).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **4️⃣ Start Docker for PostgreSQL**
+```bash
+docker-compose up -d
+```
 
-## Learn More
+### **5️⃣ Apply Prisma Migrations & Seed Database**
+```bash
+pnpx prisma migrate dev && pnpx prisma db seed
+```
 
-To learn more about Next.js, take a look at the following resources:
+### **6️⃣ Start Development Server**
+```bash
+pnpm dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **7️⃣ (Optional) Run Storybook**
+```bash
+pnpm storybook
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## **📌 2. Additional Information**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- For a complete **setup guide**, including **manual installation**, refer to the detailed documentation:
+  [Setup Guide](./SETUP_GUIDE.md)
+- Need help? Refer to the official documentation:
+    - [Next.js Docs](https://nextjs.org/docs)
+    - [Prisma Docs](https://www.prisma.io/docs)
+    - [Auth.js Docs](https://authjs.dev/)
+    - [Docker Docs](https://docs.docker.com/)
+    - [Storybook Docs](https://storybook.js.org/docs/react/get-started/introduction)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## **📌 3. Contributing**
+Feel free to contribute and improve this starter kit! 🚀
+
+1. Fork the repo.
+2. Create a new feature branch:
+```bash
+git checkout -b feature-branch
+```
+3. Make changes and commit:
+```bash
+git commit -m "Added new feature"
+```
+4. Push changes:
+```bash
+git push origin feature-branch
+```
+5. Create a **Pull Request**.
+
+---
+
+## **📌 4. License**
+This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for details.
+
