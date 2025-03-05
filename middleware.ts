@@ -1,6 +1,6 @@
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
-import { NextRequest } from "next/server";
+import { adminRoutes, privateRoutes } from "@/routes";
 
 // Use only one of the two middleware options below
 // 1. Use middleware directly
@@ -8,6 +8,37 @@ import { NextRequest } from "next/server";
 
 // 2. Wrapped middleware option
 const { auth } = NextAuth(authConfig);
-export default auth(async (req: NextRequest) => {
-    // Your custom middleware logic goes here
+
+export default auth(async (req) => {
+  const isLoggedIn = await !!req.auth;
+  const { nextUrl } = req;
+  const url = "http://localhost:3000";
+  // const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
+  const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = nextUrl.pathname.includes("/auth");
+  const isApiRoute = nextUrl.pathname.includes("/api");
+  
+  if (isApiRoute) {
+    return
+  }
+  
+  if (isLoggedIn && isAuthRoute) {
+    return Response.redirect(`${url}/dashboard`);
+  }
+  
+  if (isAuthRoute && !isLoggedIn) {
+    return;
+  }
+  
+  if(!isLoggedIn && isPrivateRoute) {
+    return Response.redirect(`${url}/auth/sign-in`);
+  }
+  
+  console.log("Middleware called", req.nextUrl.pathname);
+  console.log(req.auth);
+  console.log(req);
 });
+
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
