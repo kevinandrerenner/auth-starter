@@ -1,4 +1,4 @@
-import { FaApple, FaFacebook, FaGithub } from "react-icons/fa6";
+import { FaApple, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import { signIn } from "@/auth";
@@ -24,7 +24,7 @@ export default function AuthProviderButtons({ variant, size }: any) {
               size={size}
               onClick={async () => {
                 "use server";
-                await signIn(authProvider.provider, { redirectTo: "/" });
+                await signIn(authProvider.provider, { redirectTo: "/dashboard" });
               }}
             >
               <authProvider.icon />

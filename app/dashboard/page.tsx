@@ -1,9 +1,7 @@
-import { auth } from "@/auth";
-
-export default async function DashboardPage () {
-  const session = await auth();
-  console.log(session);
+export default function DashboardPage() {
   return (
-    <div>DashboardPage</div>
+    <div>
+      <div>DashboardPage</div>
+    </div>
   );
-};
+}

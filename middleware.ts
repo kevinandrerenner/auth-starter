@@ -34,11 +34,16 @@ export default auth(async (req) => {
     return Response.redirect(`${url}/auth/sign-in`);
   }
   
-  console.log("Middleware called", req.nextUrl.pathname);
-  console.log(req.auth);
-  console.log(req);
+  // console.log("Middleware called", req.nextUrl.pathname);
+  // console.log(req.auth);
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/',
+    '/(api|trpc)(.*)',
+  ],
 };
