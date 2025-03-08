@@ -38,6 +38,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       token.email = existingUser.email;
       token.image = existingUser.image;
       token.role = existingUser.role;
+      token.status = existingUser.status;
 
       return token;
     },
@@ -48,7 +49,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           ...session.user,
           id: token.sub,
           isOauth: token.isOauth,
-          role: token.role
+          role: token.role,
+          status: token.status,
+
         }
       };
     }

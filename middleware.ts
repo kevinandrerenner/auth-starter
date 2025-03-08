@@ -1,6 +1,6 @@
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
-import { adminRoutes, privateRoutes } from "@/routes";
+import { privateRoutes } from "@/routes";
 
 // Use only one of the two middleware options below
 // 1. Use middleware directly
@@ -10,10 +10,9 @@ import { adminRoutes, privateRoutes } from "@/routes";
 const { auth } = NextAuth(authConfig);
 
 export default auth(async (req) => {
-  const isLoggedIn = await !!req.auth;
+  const isLoggedIn = !!req.auth;
   const { nextUrl } = req;
   const url = "http://localhost:3000";
-  // const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
   const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
   const isAuthRoute = nextUrl.pathname.includes("/auth");
   const isApiRoute = nextUrl.pathname.includes("/api");

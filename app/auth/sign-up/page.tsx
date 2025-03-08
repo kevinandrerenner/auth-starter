@@ -44,7 +44,7 @@ export default function SignUpPage() {
             <div className="text-center text-sm text-muted-foreground">
               Already have an account?
               <Link
-                href="./sign-in"
+                href="/auth/sign-in"
                 className="ml-1 text-muted-foreground underline hover:text-foreground"
               >
                 Sign in

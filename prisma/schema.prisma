@@ -49,6 +49,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          Role @default(user)
+  status        Status @default(active)
+  lastActive    DateTime? @default(now())
 
   @@map("users")
 }
@@ -66,4 +68,12 @@ enum Role {
   admin
   user
   guest
+  editor
+}
+
+enum Status {
+  active
+  suspended
+  inactive
+  deactivated
 }

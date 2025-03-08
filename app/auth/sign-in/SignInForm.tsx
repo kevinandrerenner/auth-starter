@@ -82,7 +82,7 @@ export function SignInForm() {
               <FormLabel>
                   Password
               </FormLabel>
-                <Link href={"./forgot-password"} className={"text-sm underline text-muted-foreground hover:text-foreground"}>
+                <Link href={"/auth/forgot-password"} className={"text-sm underline text-muted-foreground hover:text-foreground"}>
                   Forgot password?
                 </Link>
                 </div>

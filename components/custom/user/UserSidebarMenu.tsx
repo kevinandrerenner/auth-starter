@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { signOut } from "@/auth";
 import UserAvatar from "@/components/custom/user/UserAvatar";
-import RoleBadge from "@/components/custom/user/RoleBadge";
 
 export default function MoodToggleDropDown({ user }: any) {
   return (
@@ -27,13 +26,12 @@ export default function MoodToggleDropDown({ user }: any) {
         <DropdownMenuTrigger asChild>
           <SidebarMenuButton
             size="lg"
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:cursor-pointer"
           >
             <UserAvatar user={user} />
             <div className="grid flex-1 text-left text-sm leading-tight">
               <div className="flex gap-x-1.5">
                 <span className="truncate font-semibold">{user?.name}</span>
-                <RoleBadge user={user} />
               </div>
               <span className="truncate text-xs">{user?.email}</span>
             </div>
@@ -51,7 +49,6 @@ export default function MoodToggleDropDown({ user }: any) {
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <div className="flex gap-x-1.5">
                   <span className="truncate font-semibold">{user?.name}</span>
-                  <RoleBadge user={user} />
                 </div>
                 <span className="truncate text-xs">{user?.email}</span>
               </div>

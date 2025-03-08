@@ -1,9 +1,9 @@
 import {
-  Calendar,
+  Calendar, ChartPie,
   Home,
-  Inbox,
+  Inbox, LayoutDashboard,
   Search,
-  Settings,
+  Settings, Users
 } from "lucide-react";
 
 import {
@@ -15,36 +15,33 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarMenuItem, SidebarRail
 } from "@/components/ui/sidebar";
 
 import UserSidebarMenu from "@/components/custom/user/UserSidebarMenu";
+import Link from "next/link";
+import { Collapsible } from "@/components/ui/collapsible";
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
-    icon: Home,
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: LayoutDashboard,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Users",
+    url: "/dashboard/users",
+    icon: Users,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
+    title: "Analytics",
+    url: "/dashboard/analytics",
+    icon: ChartPie,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/dashboard/settings",
     icon: Settings,
   },
 ];
@@ -55,19 +52,25 @@ export async function AppSidebar({session}:{session: any}) {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
-        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+        <SidebarGroup className="group/collapsible">
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
+              <Collapsible
+                key={item.title}
+                asChild
+                className="group/collapsible"
+              >
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                  <SidebarMenuButton tooltip={item.title} asChild >
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+              </Collapsible>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -80,6 +83,7 @@ export async function AppSidebar({session}:{session: any}) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

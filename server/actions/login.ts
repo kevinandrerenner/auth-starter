@@ -4,11 +4,11 @@ import { SignInSchema } from "@/schemas";
 import { z } from "zod";
 import { prisma } from "@/prisma/prisma";
 import { signIn } from "@/auth";
-import bcrypt from "bcryptjs"; // ✅ Needed for password comparison
+import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 
 export const login = async (data: z.infer<typeof SignInSchema>) => {
-  // ✅ Use safeParse() to prevent exceptions
+  // Use safeParse() to prevent exceptions
   const validatedData = SignInSchema.safeParse(data);
   if (!validatedData.success) {
     return { error: "Invalid Credentials" };
@@ -20,12 +20,12 @@ export const login = async (data: z.infer<typeof SignInSchema>) => {
     where: { email },
   });
 
-  // ✅ Correct user existence check
+  // Correct user existence check
   if (!user || !user.password) {
     return { error: "Email not found" };
   }
 
-  // ✅ Compare the provided password with the hashed password in the database
+  // Compare the provided password with the hashed password in the database
   const passwordMatch = await bcrypt.compare(password, user.password);
   console.log(passwordMatch)
   if (!passwordMatch) {
@@ -33,9 +33,16 @@ export const login = async (data: z.infer<typeof SignInSchema>) => {
   }
 
   try {
+    // update lastActive and set status to active
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastActive: new Date(), status: "active" },
+    });
+
+    // Sign in user
     await signIn("credentials", {
       email: user.email,
-      password, // ✅ Send plain password (NextAuth will handle verification)
+      password, // Send plain password (NextAuth will handle verification)
       redirectTo: "/dashboard",
     });
   } catch (error) {
