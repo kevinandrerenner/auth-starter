@@ -39,7 +39,10 @@ export async function updateInactiveUsers() {
   }
 }
 
-export async function updateUserStatus(userId: string, newStatus: "active" | "suspended") {
+export async function updateUserStatus(
+  userId: string,
+  newStatus: "active" | "suspended",
+) {
   try {
     await prisma.user.update({
       where: { id: userId },
@@ -64,4 +67,56 @@ export async function deleteUser(userId: string) {
     console.error("Error deleting user:", error);
     return { success: false, message: "Failed to delete user" };
   }
+}
+
+export async function getUserStats() {
+  const now = new Date();
+  const startOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  // const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  const [currentUsers, lastMonthUsers, currentActive, lastMonthActive] =
+    await Promise.all([
+      prisma.user.count(),
+      prisma.user.count({
+        where: {
+          createdAt: { gte: startOfLastMonth, lt: startOfCurrentMonth },
+        },
+      }),
+      prisma.user.count({ where: { status: "active" } }),
+      prisma.user.count({
+        where: {
+          status: "active",
+          createdAt: { gte: startOfLastMonth, lt: startOfCurrentMonth },
+        },
+      }),
+    ]);
+
+  function calculatePercentage(current: number, previous: number) {
+    if (previous === 0) return 0;
+    return ((current - previous) / previous) * 100;
+  }
+
+  function calculateDifference(current: number, previous: number) {
+    if (previous === 0) return 0;
+    return current - previous;
+  }
+
+  return {
+    totalUsers: currentUsers,
+    totalUsersChangePercentage: calculatePercentage(
+      currentUsers,
+      lastMonthUsers,
+    ),
+    totalUsersChange: calculateDifference(currentUsers, lastMonthUsers),
+    activeUsers: currentActive,
+    activeUsersChangePercentage: calculatePercentage(
+      currentActive,
+      lastMonthActive,
+    ),
+    activeUsersChange: calculateDifference(
+      currentActive,
+      lastMonthActive,
+    ),
+  };
 }

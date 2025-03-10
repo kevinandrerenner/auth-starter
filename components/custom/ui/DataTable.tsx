@@ -15,8 +15,6 @@ import {
   getSortedRowModel,
   useReactTable,
   type FilterFn,
-  Updater,
-  TableState,
 } from "@tanstack/react-table";
 import { ChevronDown, Search, SortAsc, SortDesc } from "lucide-react";
 
@@ -72,7 +70,7 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] = useState("");
 
   // Custom filter function that searches across multiple columns
-  const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  const fuzzyFilter: FilterFn<any> = (row, columnId, value) => {
     // If no value is provided, return all rows
     if (!value) return true;
 
@@ -98,13 +96,12 @@ export function DataTable<TData, TValue>({
   };
 
   const table = useReactTable({
-    onStateChange(updater: Updater<TableState>): void {},
     renderFallbackValue: undefined,
     data,
     columns,
     initialState: {
       pagination: {
-        pageSize: 10,  // Set the default number of rows per page (e.g., 10, 20, 50)
+        pageSize: 13,  // Set the default number of rows per page (e.g., 10, 20, 50)
       },
     },
     filterFns: {
@@ -194,7 +191,7 @@ export function DataTable<TData, TValue>({
                         className="capitalize"
                         checked={column.getIsVisible()}
                         onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
+                          column.toggleVisibility(value)
                         }
                       >
                         {column.id}

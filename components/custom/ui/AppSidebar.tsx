@@ -1,10 +1,4 @@
-import {
-  Calendar, ChartPie,
-  Home,
-  Inbox, LayoutDashboard,
-  Search,
-  Settings, Users
-} from "lucide-react";
+import { ChartPie, LayoutDashboard, Settings, Users } from "lucide-react";
 
 import {
   Sidebar,
@@ -15,7 +9,8 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem, SidebarRail
+  SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 
 import UserSidebarMenu from "@/components/custom/user/UserSidebarMenu";
@@ -46,7 +41,7 @@ const items = [
   },
 ];
 
-export async function AppSidebar({session}:{session: any}) {
+export async function AppSidebar({ session }: { session: any }) {
   const user = session?.user;
 
   return (
@@ -57,20 +52,20 @@ export async function AppSidebar({session}:{session: any}) {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-              <Collapsible
-                key={item.title}
-                asChild
-                className="group/collapsible"
-              >
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton tooltip={item.title} asChild >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </Collapsible>
+                <Collapsible
+                  key={item.title}
+                  asChild
+                  className="group/collapsible"
+                >
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton tooltip={item.title} asChild>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </Collapsible>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -78,8 +73,9 @@ export async function AppSidebar({session}:{session: any}) {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
+          <SidebarMenuItem></SidebarMenuItem>
           <SidebarMenuItem>
-            <UserSidebarMenu user={user}/>
+            <UserSidebarMenu user={user} />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

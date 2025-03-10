@@ -1,26 +1,18 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { MoodToggle } from "@/components/custom/ui/MoodToggle";
-import { Input } from "@/components/ui/input";
-import { Command, Search } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import Searchbar from "@/components/custom/ui/Searchbar";
+import React from "react";
 
 export default function DashboardNavbar() {
   return (
-    <nav className="flex items-center justify-between py-3 px-4">
-      <SidebarTrigger />
-      <div className="relative flex items-center space-x-2">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Badge
-            variant="secondary"
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-          >
-            <Command />K
-          </Badge>
-          <Input type="text" placeholder="Search..." className="pl-9" />
+    <>
+      <nav className="w-full justify-between backdrop-blur-md bg-background/50  flex border-b items-center py-3 px-4 overflow-hidden">
+        <SidebarTrigger />
+        <div className="flex items-center gap-4">
+          <Searchbar />
+          <MoodToggle />
         </div>
-        <MoodToggle />
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }

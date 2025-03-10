@@ -19,7 +19,7 @@ import {
 import { signOut } from "@/auth";
 import UserAvatar from "@/components/custom/user/UserAvatar";
 
-export default function MoodToggleDropDown({ user }: any) {
+export default function UserSidebarMenu({ user }: any) {
   return (
     <div>
       <DropdownMenu>
